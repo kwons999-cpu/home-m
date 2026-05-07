@@ -20,7 +20,9 @@
   /* ── 시계 ── */
   .clock-layer { text-align: center; padding: 24px 0 16px; }
   #clock-date { font-size: 15px; font-weight: 300; color: #b0b8d0; letter-spacing: 0.5px; margin-bottom: 4px; }
-  #clock-time { font-size: 52px; font-weight: 400; color: #fff; letter-spacing: 4px; line-height: 1; font-family: 'Orbitron', sans-serif; font-variant-numeric: tabular-nums; }
+  #clock-time { font-size: 52px; font-weight: 400; color: #fff; font-family: 'Orbitron', sans-serif; display: flex; align-items: center; justify-content: center; gap: 0; line-height: 1; }
+  .clock-seg { display: inline-block; width: 2ch; text-align: center; font-variant-numeric: tabular-nums; }
+  .clock-sep { display: inline-block; width: 0.5ch; text-align: center; color: rgba(255,255,255,0.5); }
 
   /* ── 검색 ── */
   .search-layer { margin-bottom: 18px; }
@@ -104,7 +106,13 @@
 
   <div class="clock-layer">
     <div id="clock-date"></div>
-    <div id="clock-time"></div>
+    <div id="clock-time">
+      <span class="clock-seg" id="ch"></span>
+      <span class="clock-sep">:</span>
+      <span class="clock-seg" id="cm"></span>
+      <span class="clock-sep">:</span>
+      <span class="clock-seg" id="cs"></span>
+    </div>
   </div>
 
   <div class="search-layer">
@@ -239,10 +247,9 @@ const DAY_KR=['일','월','화','수','목','금','토'];
 function updateClock(){
   const n=new Date();
   document.getElementById('clock-date').textContent=`${n.getFullYear()}년 ${n.getMonth()+1}월 ${n.getDate()}일 (${DAY_KR[n.getDay()]})`;
-  const h=String(n.getHours()).padStart(2,'0');
-  const m=String(n.getMinutes()).padStart(2,'0');
-  const s=String(n.getSeconds()).padStart(2,'0');
-  document.getElementById('clock-time').textContent=`${h}:${m}:${s}`;
+  document.getElementById('ch').textContent = String(n.getHours()).padStart(2,'0');
+  document.getElementById('cm').textContent = String(n.getMinutes()).padStart(2,'0');
+  document.getElementById('cs').textContent = String(n.getSeconds()).padStart(2,'0');
 }
 setInterval(updateClock,1000); updateClock();
 
